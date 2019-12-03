@@ -1,15 +1,17 @@
-import React, { useRef, useState } from "react";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import React, { useRef, useState, Fragment } from "react";
+import { Radio, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
-import { API } from 'aws-amplify'
+import { API } from "aws-amplify";
 import "./NewNote.css";
 import { s3Upload } from "../libs/awsLib";
+import Canvas from "./Canvas";
 
 export default function NewNote(props) {
   const file = useRef(null);
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [fileType, setFileType] = useState("");
 
   function validateForm() {
     return content.length > 0;
@@ -33,22 +35,21 @@ export default function NewNote(props) {
     setIsLoading(true);
 
     try {
-      const attachment = file.current? await s3Upload(file.current)
-      : null;
+      const attachment = file.current ? await s3Upload(file.current) : null;
 
-      await createNote({content, attachment})
-      alert("Note created successfully!")
-      props.history.push("/")
-    } catch(e){
-      alert(e)
-      setIsLoading(false)
+      await createNote({ content, attachment });
+      alert("Note created successfully!");
+      props.history.push("/");
+    } catch (e) {
+      alert(e);
+      setIsLoading(false);
     }
   }
 
-  function createNote(note){
+  function createNote(note) {
     return API.post("notes", "/notes", {
       body: note
-    })
+    });
   }
 
   return (
@@ -61,9 +62,34 @@ export default function NewNote(props) {
             onChange={e => setContent(e.target.value)}
           />
         </FormGroup>
+
         <FormGroup controlId="file">
-          <ControlLabel>Attachment</ControlLabel>
-          <FormControl onChange={handleFileChange} type="file" />
+          <FormGroup>
+            <Radio
+              name="file"
+              inline
+              value="attach"
+              onClick={e => setFileType(e.target.value)}
+            >
+              Attach File
+            </Radio>{" "}
+            <Radio
+              name="file"
+              inline
+              value="draw"
+              onClick={e => setFileType(e.target.value)}
+            >
+              Draw and Upload Image
+            </Radio>{" "}
+          </FormGroup>
+          {fileType === "attach" ? (
+            <Fragment>
+              <ControlLabel>Attachment</ControlLabel>
+              <FormControl onChange={handleFileChange} type="file" />
+            </Fragment>
+          ) : (
+            <Canvas fileType={fileType}/>
+          )}
         </FormGroup>
         <LoaderButton
           block

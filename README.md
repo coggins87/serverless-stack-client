@@ -1,3 +1,7 @@
+# This project was created through the Serverless-Stack.com tutorial
+
+In addition, it uses React Canvas, React Color
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

@@ -1,0 +1,27 @@
+.DrawPad {
+  display: flex;
+  margin: 0 auto;
+  width:100%;
+}
+
+.DrawSideBar {
+  display: inherit;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 5px;
+  background-color: lightgreen
+}
+
+#save {
+  display: inherit;
+
+  align-content: baseline;;
+  flex-direction: column;
+
+}
+
+#edit {
+  display: inherit;
+  flex-direction: column;
+  justify-content: space-between;
+}
