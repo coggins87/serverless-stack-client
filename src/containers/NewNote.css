@@ -6,3 +6,12 @@
   height: 300px;
   font-size: 24px;
 }
+
+.btn-block {
+  width: 30%;
+ margin-right: 70%
+}
+
+#create {
+  margin: 0 auto
+}

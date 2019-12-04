@@ -14,7 +14,7 @@
 
 #save {
   display: inherit;
-
+  color: rgb(20, 18, 18);
   align-content: baseline;;
   flex-direction: column;
 
@@ -24,4 +24,11 @@
   display: inherit;
   flex-direction: column;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 411px){
+  .DrawPad {
+    display: block
+  }
+
 }

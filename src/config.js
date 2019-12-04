@@ -2,7 +2,7 @@ export default {
   MAX_ATTACHMENT_SIZE: 5000000,
   STRIPE_KEY: "pk_test_mTDjb81w361titAXGngxhXWB00nPbfe0nk",
   s3: {
-    REGION: "us-west-1",
+    REGION: "us-west-2",
     BUCKET: "colleen-note-app-uploads"
   },
   apiGateway: {

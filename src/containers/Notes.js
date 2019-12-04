@@ -1,16 +1,18 @@
 import React, { useRef, useState, useEffect } from "react";
 import { API, Storage } from "aws-amplify";
-import { FormControl, FormGroup, ControlLabel } from "react-bootstrap";
+import { ButtonToolbar, Alert, FormControl, FormGroup, ControlLabel } from "react-bootstrap";
 import config from "../config";
 import { s3Upload, s3Delete } from "../libs/awsLib";
 import LoaderButton from "../components/LoaderButton";
-
+import Canvas from "./Canvas.js";
+import handleSaveDrawing from '../libs/canvasLib'
 export default function Notes(props) {
   const file = useRef(null);
   const [note, setNote] = useState(null);
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [canvas, setCanvas] = useState(false);
 
   useEffect(() => {
     function loadNote() {
@@ -21,11 +23,9 @@ export default function Notes(props) {
       try {
         const note = await loadNote();
         const { content, attachment } = note;
-
         if (attachment) {
           note.attachmentURL = await Storage.vault.get(attachment);
         }
-
         setContent(content);
         setNote(note);
       } catch (e) {
@@ -53,6 +53,8 @@ export default function Notes(props) {
       body: note
     });
   }
+
+
 
   async function handleSubmit(event) {
     let attachment;
@@ -85,8 +87,8 @@ export default function Notes(props) {
       setIsLoading(false);
     }
   }
-  function deleteNote(){
-    return API.del('notes', `/notes/${props.match.params.id}`)
+  function deleteNote() {
+    return API.del("notes", `/notes/${props.match.params.id}`);
   }
   async function handleDelete(event) {
     event.preventDefault();
@@ -102,13 +104,13 @@ export default function Notes(props) {
     setIsDeleting(true);
 
     try {
-      await deleteNote()
-      await s3Delete(note.attachment)
-      props.history.push('/')
-      alert('Note Deleted!')
-    } catch(e){
-      alert(e)
-      setIsDeleting(false)
+      await deleteNote();
+      await s3Delete(note.attachment);
+      props.history.push("/");
+      alert("Note Deleted!");
+    } catch (e) {
+      alert(e);
+      setIsDeleting(false);
     }
   }
 
@@ -141,18 +143,20 @@ export default function Notes(props) {
             {!note.attachment && <ControlLabel>Attachment</ControlLabel>}
             <FormControl onChange={handleFileChange} type="file" />
           </FormGroup>
+          <div className="buttons">
+            <ButtonToolbar>
           <LoaderButton
-            block
+            className="save-delete-edit ml-3"
             type="submit"
             bsSize="large"
-            bsStyle="primary"
+            bsStyle="success"
             isLoading={isLoading}
             disabled={!validateForm()}
           >
             Save
           </LoaderButton>
           <LoaderButton
-            block
+            className="save-delete-edit ml-3"
             bsSize="large"
             bsStyle="danger"
             onClick={handleDelete}
@@ -160,7 +164,26 @@ export default function Notes(props) {
           >
             Delete
           </LoaderButton>
+          <LoaderButton
+            className="save-delete-edit ml-3"
+            bsSize="large"
+            bsStyle="primary"
+            onClick={()=>{setCanvas(!canvas)}}
+          >
+            {!canvas ? 'Draw' : 'Cancel Draw'}
+          </LoaderButton>
+          </ButtonToolbar>
+          </div>
         </form>
+      )}
+      {canvas && (<>
+        <Alert bsStyle="danger">This Will Overwrite Your Current Drawing or File!</Alert>
+
+        <Canvas
+          handleSaveDrawing={handleSaveDrawing}
+          fileType="draw"
+          file={file}
+        /></>
       )}
     </div>
   );

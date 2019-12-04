@@ -23,3 +23,34 @@
 .Home .notes p {
   color: #666;
 }
+
+.list-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:stretch;
+}
+
+.list-group-item{
+  width: 33.33333%;
+}
+.list-group-item:nth-child(odd){
+  background-color: greenyellow;
+}
+.list-group-item:last-child{
+  border-radius: 0px;
+}
+
+#new {
+  flex-grow: 1;
+  width: 100%;
+  background-color: rgb(204, 202, 202)
+}
+
+@media screen and (max-width: 411px){
+  .list-group{
+    flex-direction: column;
+  }
+  .list-group-item {
+    width: 100%
+  }
+}

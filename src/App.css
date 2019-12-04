@@ -6,3 +6,8 @@
   font-weight: bold
 }
 
+#app-name {
+  font-family: "Walter Turncoat", cursive;
+  color: rgb(8, 194, 8);
+  font-size: 36px
+}
