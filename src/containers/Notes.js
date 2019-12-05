@@ -22,7 +22,6 @@ export default function Notes(props) {
     async function onLoad() {
       try {
         const note = await loadNote();
-        console.log(note)
         const { content, attachment } = note;
         if (attachment) {
           note.attachmentURL = await Storage.vault.get(attachment);
@@ -154,7 +153,7 @@ export default function Notes(props) {
             isLoading={isLoading}
             disabled={!validateForm()}
           >
-            Save
+            Save Changes
           </LoaderButton>
           <LoaderButton
             className="save-delete-edit ml-3"
