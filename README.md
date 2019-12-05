@@ -1,8 +1,35 @@
 # This project was created through the Serverless-Stack.com tutorial
 
-In addition, it uses React Canvas, React Color
+## Debriefing
+
+What did you learn in the process of doing this tutorial?
+
+* The fundamentals of creating a serverless API using AWS Lambda, including authentication, what S3's are vs a Database
+* How simple AWS makes calls to the API using Amplify
+* How to use bootstrap-react
+* How to use hooks in React
+
+What questions, thoughts, or concerns do you have about this technology stack and tutorial?
+
+* Authentication piece of the tutorial seems to lack in completeness; for example, the suggestion in the hints for how to handle a user trying to submit a signup form when they already exist tells you to resend the confirmation code, when it should probably also have a check to see if the user is already confirmed rather than just sending a new code right off the bat.
+* I also had an issue with the starter files that serverless-stack provided; the eslinter threw errors when trying to import/export modules, so I had to disable it.
+* Overall I found it to be very comprehensive and thorough and a good introduction to serverless apps! 
+
+What did you add to the App/project, and why?
+
+* I added a canvas drawing component so users can add a sketch to add to their note instead of just a file attachment; I thought it could be an easy way to have a user illustrate something for their note without having to do it separately on their computer.
+* I also added a row in the db for a track of when the note was updated; I thought this could be useful information for the user especially when they add lots of notes.
+
+What do you see as some of the benefits/negatives of building Apps in the serverless stack?
+
+* Benefits: easy deployment, don't have to worry about serving and the details because AWS takes care of it all for you, lots of support and built-in features and customizability so it's quicker to set up than a from scratch server, easier to scale
+* Negatives: can be expensive depending on the size of the project, if you want to change which serverless provider you use it seems like it would be difficult/involve a complete code refactor, might be more difficult to debug errors/testing.
+
+## Technologies Used
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+In addition, it uses React Canvas, React Color, and React Bootstrap
 
 ## Available Scripts
 
